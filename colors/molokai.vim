@@ -119,7 +119,7 @@ hi Comment         guifg=#7E8E91
 hi CursorLine                    guibg=#293739
 hi CursorLineNr    guifg=#FD971F               gui=none
 hi ColorColumn                   guibg=#232526
-hi LineNr          guifg=#465457 guibg=#1B1D1E
+hi LineNr          guifg=#777777 guibg=#1B1D1E
 hi NonText         guifg=#465457
 hi SpecialKey      guifg=#465457
 
