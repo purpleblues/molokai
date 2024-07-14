@@ -125,6 +125,7 @@ hi SpecialKey      guifg=#465457
 
 hi CursorLine cterm=none
 
+" https://coderwall.com/p/pb1uzq/z-shell-colors
 
 " Support for 256-color terminal
 
