@@ -8,13 +8,17 @@
 " by Hamish Stuart Macpherson
 "
 
+scriptencoding utf-8
+
 hi clear
 
-" no guarantees for version 5.8 and below, but this makes it stop
-" complaining
-hi clear
-if exists("syntax_on")
-    syntax reset
+if version > 580
+    " no guarantees for version 5.8 and below, but this makes it stop
+    " complaining
+    hi clear
+    if exists("syntax_on")
+        syntax reset
+    endif
 endif
 
 let g:colors_name="molokai"
@@ -27,7 +31,13 @@ endif
 
 
 " vertical split lines should look like a line instead of a dashed one
-set fillchars+=vert:│
+if get(g:, "molokai_vertical_split", 1)
+    let s:molokai_vertical_split_char = get(g:, "molokai_vertical_split_char", "│")
+    let s:fillchars = filter(split(&fillchars, ","), 'v:val !~# "^vert:"')
+    call add(s:fillchars, "vert:" . s:molokai_vertical_split_char)
+    let &fillchars = join(s:fillchars, ",")
+    unlet s:fillchars s:molokai_vertical_split_char
+endif
 
 
 hi Boolean         guifg=#AE81FF
@@ -45,6 +55,7 @@ hi DiffAdd                       guibg=#13354A
 hi DiffChange      guifg=#89807D guibg=#4C4745
 hi DiffDelete      guifg=#960050 guibg=#1E0010
 hi DiffText                      guibg=#4C4745 gui=italic,bold
+hi QuickFixLine    guifg=#000000 guibg=#FFE792
 
 hi Directory       guifg=#A6E22E               gui=bold
 hi Error           guifg=#E6DB74 guibg=#1E0010
@@ -73,6 +84,9 @@ hi Pmenu           guifg=#66D9EF guibg=#000000
 hi PmenuSel                      guibg=#808080
 hi PmenuSbar                     guibg=#080808
 hi PmenuThumb      guifg=#66D9EF
+hi NormalFloat     guifg=#F8F8F2 guibg=#232526
+hi FloatBorder     guifg=#66D9EF guibg=#232526
+hi FloatTitle      guifg=#E6DB74 guibg=#232526 gui=bold
 
 hi PreCondit       guifg=#A6E22E               gui=bold
 hi PreProc         guifg=#A6E22E
@@ -85,6 +99,28 @@ hi SignColumn      guifg=#A6E22E guibg=#232526
 hi SpecialChar     guifg=#F92672               gui=bold
 hi SpecialComment  guifg=#7E8E91               gui=bold
 hi Special         guifg=#66D9EF guibg=bg      gui=italic
+
+" diagnostics and language-server highlights
+hi DiagnosticError            guifg=#F92672
+hi DiagnosticWarn             guifg=#FD971F
+hi DiagnosticInfo             guifg=#66D9EF
+hi DiagnosticHint             guifg=#A6E22E
+hi DiagnosticSignError        guifg=#F92672 guibg=#232526
+hi DiagnosticSignWarn         guifg=#FD971F guibg=#232526
+hi DiagnosticSignInfo         guifg=#66D9EF guibg=#232526
+hi DiagnosticSignHint         guifg=#A6E22E guibg=#232526
+hi DiagnosticUnderlineError                 gui=undercurl guisp=#F92672
+hi DiagnosticUnderlineWarn                  gui=undercurl guisp=#FD971F
+hi DiagnosticUnderlineInfo                  gui=undercurl guisp=#66D9EF
+hi DiagnosticUnderlineHint                  gui=undercurl guisp=#A6E22E
+hi DiagnosticVirtualTextError guifg=#F92672 guibg=#1E0010
+hi DiagnosticVirtualTextWarn  guifg=#FD971F guibg=#33291B
+hi DiagnosticVirtualTextInfo  guifg=#66D9EF guibg=#12313A
+hi DiagnosticVirtualTextHint  guifg=#A6E22E guibg=#1F2F1B
+hi LspReferenceText                         guibg=#293739
+hi LspReferenceRead                         guibg=#293739
+hi LspReferenceWrite                        guibg=#293739
+hi LspInlayHint              guifg=#7E8E91 guibg=#232526
 
 if has("spell")
     hi SpellBad    guisp=#FF0000 gui=undercurl
@@ -110,6 +146,7 @@ hi VisualNOS                     guibg=#403D3D
 hi Visual                        guibg=#403D3D
 hi WarningMsg      guifg=#FFFFFF guibg=#333333 gui=bold
 hi WildMenu        guifg=#66D9EF guibg=#000000
+hi WinSeparator    guifg=#808080 guibg=#080808 gui=bold
 
 hi TabLineFill     guifg=#1B1D1E guibg=#1B1D1E
 hi TabLine         guibg=#1B1D1E guifg=#808080 gui=none
@@ -118,12 +155,32 @@ hi Normal          guifg=#F8F8F2 guibg=#1B1D1E
 hi Comment         guifg=#7E8E91
 hi CursorLine                    guibg=#293739
 hi CursorLineNr    guifg=#FD971F               gui=none
+hi CursorLineSign                guibg=#293739
+hi CursorLineFold  guifg=#465457 guibg=#293739
 hi ColorColumn                   guibg=#232526
 hi LineNr          guifg=#777777 guibg=#1B1D1E
 hi NonText         guifg=#465457
 hi SpecialKey      guifg=#465457
 
 hi CursorLine cterm=none
+
+if has("nvim")
+   hi @boolean         guifg=#AE81FF
+   hi @character       guifg=#E6DB74
+   hi @comment         guifg=#7E8E91
+   hi @constant        guifg=#AE81FF
+   hi @constructor     guifg=#66D9EF
+   hi @function        guifg=#FFFFFF
+   hi @function.builtin guifg=#A6E22E
+   hi @keyword         guifg=#F92672               gui=bold
+   hi @number          guifg=#AE81FF
+   hi @operator        guifg=#F92672
+   hi @property        guifg=#F8F8F2
+   hi @punctuation     guifg=#8F8F8F
+   hi @string          guifg=#E6DB74
+   hi @type            guifg=#66D9EF
+   hi @variable        guifg=#F8F8F2
+endif
 
 " https://coderwall.com/p/pb1uzq/z-shell-colors
 
@@ -154,6 +211,7 @@ if &t_Co > 255
    hi DiffChange      ctermfg=181 ctermbg=239
    hi DiffDelete      ctermfg=162 ctermbg=53
    hi DiffText                    ctermbg=102 cterm=bold
+   hi QuickFixLine    ctermfg=0   ctermbg=222
 
    hi Directory       ctermfg=118               cterm=bold
    hi Error           ctermfg=219 ctermbg=89
@@ -182,6 +240,9 @@ if &t_Co > 255
    hi PmenuSel        ctermfg=255 ctermbg=242
    hi PmenuSbar                   ctermbg=232
    hi PmenuThumb      ctermfg=81
+   hi NormalFloat     ctermfg=255 ctermbg=235
+   hi FloatBorder     ctermfg=81  ctermbg=235
+   hi FloatTitle      ctermfg=229 ctermbg=235   cterm=bold
 
    hi PreCondit       ctermfg=118               cterm=bold
    hi PreProc         ctermfg=118
@@ -194,6 +255,26 @@ if &t_Co > 255
    hi SpecialChar     ctermfg=161               cterm=bold
    hi SpecialComment  ctermfg=245               cterm=bold
    hi Special         ctermfg=81
+   hi DiagnosticError            ctermfg=161
+   hi DiagnosticWarn             ctermfg=208
+   hi DiagnosticInfo             ctermfg=81
+   hi DiagnosticHint             ctermfg=118
+   hi DiagnosticSignError        ctermfg=161 ctermbg=235
+   hi DiagnosticSignWarn         ctermfg=208 ctermbg=235
+   hi DiagnosticSignInfo         ctermfg=81  ctermbg=235
+   hi DiagnosticSignHint         ctermfg=118 ctermbg=235
+   hi DiagnosticUnderlineError                 cterm=underline
+   hi DiagnosticUnderlineWarn                  cterm=underline
+   hi DiagnosticUnderlineInfo                  cterm=underline
+   hi DiagnosticUnderlineHint                  cterm=underline
+   hi DiagnosticVirtualTextError ctermfg=161 ctermbg=53
+   hi DiagnosticVirtualTextWarn  ctermfg=208 ctermbg=236
+   hi DiagnosticVirtualTextInfo  ctermfg=81  ctermbg=236
+   hi DiagnosticVirtualTextHint  ctermfg=118 ctermbg=236
+   hi LspReferenceText                       ctermbg=236
+   hi LspReferenceRead                       ctermbg=236
+   hi LspReferenceWrite                      ctermbg=236
+   hi LspInlayHint              ctermfg=59  ctermbg=236
    if has("spell")
        hi SpellBad                ctermbg=52
        hi SpellCap                ctermbg=17
@@ -218,9 +299,12 @@ if &t_Co > 255
    hi Visual                      ctermbg=235
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
    hi WildMenu        ctermfg=81  ctermbg=16
+   hi WinSeparator    ctermfg=236 ctermbg=234   cterm=bold
 
    hi Comment         ctermfg=59
    hi CursorColumn                ctermbg=236
+   hi CursorLineSign             ctermbg=236
+   hi CursorLineFold ctermfg=59  ctermbg=236
    hi ColorColumn                 ctermbg=236
    hi LineNr          ctermfg=250 ctermbg=234
    hi NonText         ctermfg=59
