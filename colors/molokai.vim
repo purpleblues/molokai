@@ -64,7 +64,7 @@ hi Exception       guifg=#A6E22E               gui=bold
 hi Float           guifg=#AE81FF
 hi FoldColumn      guifg=#465457 guibg=#000000
 hi Folded          guifg=#465457 guibg=#000000
-hi Function        guifg=#FFFFFF
+hi Function        guifg=#CBA6F7
 hi Identifier      guifg=#FFFFFF cterm=none
 hi Ignore          guifg=#808080 guibg=bg
 hi IncSearch       guifg=#C4BE89 guibg=#000000
@@ -170,7 +170,7 @@ if has("nvim")
    hi @comment         guifg=#7E8E91
    hi @constant        guifg=#AE81FF
    hi @constructor     guifg=#66D9EF
-   hi @function        guifg=#FFFFFF
+   hi @function        guifg=#CBA6F7
    hi @function.builtin guifg=#A6E22E
    hi @keyword         guifg=#F92672               gui=bold
    hi @number          guifg=#AE81FF
@@ -220,7 +220,7 @@ if &t_Co > 255
    hi Float           ctermfg=135
    hi FoldColumn      ctermfg=67  ctermbg=16
    hi Folded          ctermfg=67  ctermbg=16
-   hi Function        ctermfg=118
+   hi Function        ctermfg=183
    hi Identifier      ctermfg=208               cterm=none
    hi Ignore          ctermfg=244 ctermbg=232
    hi IncSearch       ctermfg=193 ctermbg=16
@@ -329,7 +329,7 @@ if &t_Co > 255
        hi Error           ctermfg=222 ctermbg=233
        hi Exception       ctermfg=154               cterm=bold
        hi Float           ctermfg=141
-       hi Function        ctermfg=154
+       hi Function        ctermfg=183
        hi Identifier      ctermfg=208
 
        hi Keyword         ctermfg=197               cterm=bold
