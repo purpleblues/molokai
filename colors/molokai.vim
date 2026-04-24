@@ -69,6 +69,7 @@ hi Identifier      guifg=#FFFFFF cterm=none
 hi Ignore          guifg=#808080 guibg=bg
 hi IncSearch       guifg=#C4BE89 guibg=#000000
 hi zshFunction     guifg=#CBA6F7
+hi zshFunctionCall guifg=#BCA3F2
 
 hi Keyword         guifg=#F92672               gui=bold
 hi Label           guifg=#E6DB74               gui=none
@@ -226,6 +227,7 @@ if &t_Co > 255
    hi Ignore          ctermfg=244 ctermbg=232
    hi IncSearch       ctermfg=193 ctermbg=16
    hi zshFunction     ctermfg=183
+   hi zshFunctionCall ctermfg=146
 
    hi keyword         ctermfg=161               cterm=bold
    hi Label           ctermfg=229               cterm=none
@@ -334,6 +336,7 @@ if &t_Co > 255
        hi Function        ctermfg=183
        hi Identifier      ctermfg=208
        hi zshFunction     ctermfg=183
+       hi zshFunctionCall ctermfg=146
 
        hi Keyword         ctermfg=197               cterm=bold
        hi Operator        ctermfg=197
